@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a [routerLink]="['home']" class="navbar-brand">Auth0</a>
+      <a class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar">
+        <span class="navbar-toggler-icon"></span>
+      </a>
+      <div class="collapse navbar-collapse animate__animated animate__fadeIn" id="navbar">
+        <div class="navbar-nav ms-1 ms-sm-0">
+          <a [routerLink]="['home']" routerLinkActive="active" type="button" class="nav-link">Inicio</a>
+          <a [routerLink]="['prices']" routerLinkActive="active" type="button" class="nav-link">Precios</a>
+          <a *ngIf="isLogged" [routerLink]="['protected']" routerLinkActive="active" type="button" class="nav-link">Protegido</a>
+        </div>
+
+        <div class="navbar-nav ms-auto custom-navbar justify-content-center mt-3 mb-4 my-sm-0">
+
+            <div [ngClass]="{ 'animate__slow': (auth0.isAuthenticated$ | async) === true }" class="animate__animated animate__fadeIn" [ngSwitch]="isLogged">
+
+              <a *ngSwitchCase="false" type="button" class="register-button me-3 me-sm-2">Registrarse</a>
+
+              <a *ngSwitchCase="false" (click)="auth0.loginWithRedirect()" type="button" class="login-button">Iniciar Sesión</a>
+
+              <a *ngSwitchCase="true" (click)="auth0.logout()" type="button" class="logout-button">Cerrar Sesión</a>
+
+            </div>
+
+        </div>
+
+        
+
+      </div>
+    </div>
+</nav>
